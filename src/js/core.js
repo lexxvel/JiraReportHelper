@@ -2,18 +2,24 @@ function fire() {
     document.getElementById('employee').setAttribute('value', null)
     let startDate = document.getElementById('start').value
     let endDate = document.getElementById('end').value
-    let baseLink = "https://"+$.store.get('domain')+"/secure/TimesheetReport.jspa?reportKey=jira-timesheet-plugin%3Areport&selectedProjectId=12304&reportingDay=0&projectRoleId=&filterid=&priority=&commentfirstword=&showDetails=true&sum=day&groupByField=&sortBy=&sortDir="
-
-    let a = $('#employee').val()
     
-    console.trace(a)
-    if (!startDate || !endDate || !employee || $('#employee').val().length === 0) {
-        alert("Не заполнены поля. формирование ссылки не возможно")
+    if (!$.store.get('domain')) {
+        $.store.set('domain', (prompt("Введите URL вашей Jira (БЕЗ HTTPS, СЛЕШЕЙ, только доменное имя, по типу 'jira.ru'):")))
         return;
+    } else {
+        let baseLink = "https://"+$.store.get('domain')+"/secure/TimesheetReport.jspa?reportKey=jira-timesheet-plugin%3Areport&selectedProjectId=12304&reportingDay=0&projectRoleId=&filterid=&priority=&commentfirstword=&showDetails=true&sum=day&groupByField=&sortBy=&sortDir="
+
+        let a = $('#employee').val()
+        
+        console.trace(a)
+        if (!startDate || !endDate || !employee || $('#employee').val().length === 0) {
+            alert("Не заполнены поля. формирование ссылки не возможно")
+            return;
+        }
+        $('#employee').val().forEach(el => {
+            window.open(baseLink+"&startDate="+startDate+"&endDate="+endDate+"&targetUser="+el)
+        });
     }
-    $('#employee').val().forEach(el => {
-        window.open(baseLink+"&startDate="+startDate+"&endDate="+endDate+"&targetUser="+el)
-    });
 }
 
 
@@ -97,7 +103,6 @@ function addDefaultStaff() {
         $('#addStaffNameDef').val('')
         $('#addStaffNickDef').val('')
     }
-    console.trace($.store.get('staff'))
     
     $('#employee2').select2({
         placeholder: "Выберите сотрудников",
