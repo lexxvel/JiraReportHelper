@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./src/js/jquery-3.7.1.min.js"></script>
+    <script src="./src/js/jquery.store.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="./src/js/uikit.min.js"></script>
+    <script src="./src/js/uikit-icons.js"></script>
+    <script src="./src/js/uikit-icons.min.js"></script>
+    <script src="./src/js/core.js"></script>
+    <link rel="stylesheet" href="./src/css/uikit-rtl.css">
+    <link rel="stylesheet" href="./src/css/uikit-rtl.min.css">
+    <link rel="stylesheet" href="./src/css/uikit.min.css">
+    <link rel="stylesheet" href="./src/css/main.css">
+</head>
+<body>
+    <label for="start">Начало периода</label>
+    <input class="uk-input datePickInput" type="date" id="start" name="trip-start" value="" min="2024-01-01" max="2024-12-31"/>
+    <br>
+    <label for="end">Окончание периода</label>
+    <input class="uk-input datePickInput" type="date" id="end" name="trip-start" value="" min="2024-01-01" max="2024-12-31"/>
+    <br><br>
+    <select id="employee" class="js-select2 js-example-basic-multiple" name="city" multiple="multiple" style="width: 30%;">
+    </select>
+    
+    <button class="uk-button uk-button-primary" onclick="fire()">Сформировать ссылку</button>
+
+    <br><br>
+    <br><br>
+    <a href="#modal-addStaff" uk-toggle class="uk-button" id="addStaffBtn">Добавление сотрудников</a> 
+    <a href="#modal-delStaff" uk-toggle id="delButton" class="uk-button uk-button-danger" >Удаление сотрудника</a>
+
+
+
+<!-- Модалка добавление сотрудника -->
+<div id="modal-addStaff" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <h2 class="uk-modal-title">Добавление сотрудника</h2>
+        <input class="uk-input basicInput" id="addStaffName" type="text" placeholder="Введите имя сотрудника">
+        <input class="uk-input basicInput" id="addStaffNick" type="text" placeholder="Введите системное имя сотрудника">
+        <p class="uk-text-right">
+            <button class="uk-button uk-button-primary uk-modal-close" onclick="addStaff()">Добавить сотрудника</button>
+        </p>
+    </div>
+</div>
+
+
+<!-- Модалка удаление сотрудника -->
+<div id="modal-delStaff" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <h2 class="uk-modal-title">Удаление сотрудника</h2>
+        <select id="employeeDel" class="js-select2" name="city" style="width: 100%;">
+
+        </select>
+        <p class="uk-text-right">
+            <button class="uk-button uk-button-primary uk-modal-close" onclick="delStaff()">Удалить сотрудника</button>
+        </p>
+    </div>
+</div>
+
+
+<!-- Модалка установки сотрудников по умолчанию при первом открытии  -->
+<div id="setDefaultStaff" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <h2 class="uk-modal-title">Установка сотрудников по умолчанию</h2>
+        <p class="uk-text-normal uk-text-muted uk-text-center">Текущий состав:</p>
+        <select id="employee2" class="js-select2 js-example-basic-multiple" name="city" multiple="multiple" style="width: 100%;"></select>
+        <hr class="uk-divider-small">
+        <input class="uk-input basicInput" id="addStaffNameDef" type="text" placeholder="Введите имя сотрудника">
+        <input class="uk-input basicInput" id="addStaffNickDef" type="text" placeholder="Введите системное имя сотрудника">
+        <p class="uk-text-right">
+            <button class="uk-button uk-button-primary" onclick="addDefaultStaff()">Добавить сотрудника</button>
+        </p>
+            
+        <button class="uk-button uk-button-primary uk-modal-close">Сохранить</button>
+    </div>
+</div>
+    <script src="./src/js/main.js"></script>
+</body>
+</html>
