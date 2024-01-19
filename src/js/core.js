@@ -38,34 +38,7 @@ function addStaff() {
         $('#addStaffName').val('')
         $('#addStaffNick').val('')
     }
-
-    $('#employee2').select2({
-        placeholder: "Выберите сотрудников",
-        maximumSelectionLength: 100,
-        language: "ru",
-        data:$.store.get('staff'),
-        theme: "classic",
-        closeOnSelect: false,
-    
-    });
-    
-    $('#employee').select2({
-        placeholder: "Выберите сотрудников",
-        maximumSelectionLength: 100,
-        language: "ru",
-        data:$.store.get('staff'),
-        theme: "classic",
-        closeOnSelect: false
-    
-    });
-    
-    $('#employeeDel').select2({
-        placeholder: "Выберите сотрудников",
-        maximumSelectionLength: 100,
-        language: "ru",
-        data:$.store.get('staff'),
-        theme: "classic",
-    });
+    setSelectInputs();
 }
 
 
@@ -103,7 +76,10 @@ function addDefaultStaff() {
         $('#addStaffNameDef').val('')
         $('#addStaffNickDef').val('')
     }
-    
+    setSelectInputs();
+}
+
+function setSelectInputs() {
     $('#employee2').select2({
         placeholder: "Выберите сотрудников",
         maximumSelectionLength: 100,
@@ -111,7 +87,6 @@ function addDefaultStaff() {
         data:$.store.get('staff'),
         theme: "classic",
         closeOnSelect: false,
-    
     });
     
     $('#employee').select2({
@@ -121,7 +96,6 @@ function addDefaultStaff() {
         data:$.store.get('staff'),
         theme: "classic",
         closeOnSelect: false
-    
     });
     
     $('#employeeDel').select2({
@@ -131,6 +105,29 @@ function addDefaultStaff() {
         data:$.store.get('staff'),
         theme: "classic",
     });
+}
 
-    
+function initPage() {
+    //работа с датами
+    let now = new Date()
+    var day = now.getDate(); var month = now.getMonth() + 1; var year = now.getFullYear();
+    if (day < 10) {day = '0' + day;}if (month < 10) {month = '0' + month;}let date = year+'-'+month+'-'+day
+    startDate = now; startDate.setDate(startDate.getDate() - 7);
+    day = startDate.getDate(); month = startDate.getMonth() + 1; year = startDate.getFullYear();
+    if (day < 10) {day = '0' + day;}if (month < 10) {month = '0' + month;} startDate = year+'-'+month+'-'+day
+    document.getElementById('end').setAttribute('value', date)
+    document.getElementById('start').setAttribute('value', startDate)
+
+    let staff = []
+
+    if (!$.store.get('domain')) {
+        $.store.set('domain', (prompt("Введите URL вашей Jira (БЕЗ HTTPS, СЛЕШЕЙ, только доменное имя, по типу 'jira.ru'):")))
+    } 
+        
+    if (!$.store.get('staff') || $.store.get('staff').length === 0) {
+        $.store.set('staff', staff);
+        UIkit.modal('#setDefaultStaff').show();
+    }
+
+    setSelectInputs();
 }
